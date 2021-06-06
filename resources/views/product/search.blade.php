@@ -10,7 +10,7 @@
     <tr>
      <td width="40%" align="right"><label>Select File for Upload</label></td>
      <td width="30">
-      <input type="file" name="select_file"/>
+      <input type="file" name="select_file" />
     </td>
     <td width="30%" align="left">
      <button class="btn btn-primary">Import File</button>
@@ -18,13 +18,9 @@
  </tr>
  <tr>
    <td width="40%" align="right"></td>
-   <td width="30"><span class="text-muted">.xls, .xslx</span>
-    @if($errors->any())
-    {!! implode('', $errors->all('<div>:message</div>')) !!}
-    @endif</td>
-    </td>
-  <td width="30%" align="left"></td>
-</tr>
+   <td width="30"><span class="text-muted">.xls, .xslx</span></td>
+   <td width="30%" align="left"></td>
+ </tr>
 </table>
 </div>
 </form>
@@ -49,18 +45,26 @@
     </tr>
   </thead>
   <tbody>
+    @if($product->count() > 0)
     @foreach($product as $products)
     <tr>
       <th scope="row">{{ $products->id }}</th>
       <td>{{ $products->name }}</td>
       <td>{{ $products->description }}</td>
       <td>{{ $products->unique_code }}</td>
-      <td>{{$products->category->name  }}</td>
+      <td>{{$products->category->name }}</td>
     </tr>
     @endforeach
+    @else
+    <th>
+      <td>No search result found</td>
+    </th>
+    @endif
   </tbody>
+
 </table>
 </div>
+
 @endsection
 
 

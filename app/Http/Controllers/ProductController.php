@@ -6,18 +6,26 @@ use Illuminate\Http\Request;
 use DB;
 use Excel;
 use App\Imports\ProductImport;
+use App\Product;
 class ProductController extends Controller
 {
     public function index()
     {
-    	return view('product.index');
+        $data['product']=Product::with('category')->get();
+    	return view('product.index',$data);
     }
     public function import(Request $request)
     {
+        $this->validate($request, [
+          'select_file'  => 'required|mimes:xls,xlsx'
+         ]);
     	\Excel::import(new ProductImport,$request->select_file);
-
-        \Session::put('success', 'Your file is imported successfully in database.');
-           
         return back();
+    }
+    public function search(Request $request)
+    {
+        $productSearch=$request->input('product');
+        $data['product']=Product::where('name','LIKE','%'.$productSearch.'%')->get();
+        return view('product.search',$data);
     }
 }

@@ -26,6 +26,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                <a class="navbar-brand" href="{{ url('/category/index') }}">
+                    Category                    
+                </a>
                 <a class="navbar-brand" href="{{ url('/product/index') }}">
                     Product                    
                 </a>
