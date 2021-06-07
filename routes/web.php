@@ -25,4 +25,4 @@ Route::post('/category/store','CategoryController@store');
 ///Route for Product
 Route::get('/product/index','ProductController@index');
 Route::post('product/import','ProductController@import');
-Route::post('search','ProductController@search');
+Route::any('search','ProductController@search');

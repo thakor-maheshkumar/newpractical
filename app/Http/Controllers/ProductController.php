@@ -20,12 +20,19 @@ class ProductController extends Controller
           'select_file'  => 'required|mimes:xls,xlsx'
          ]);
     	\Excel::import(new ProductImport,$request->select_file);
-        return back();
+        return redirect('product/index');
     }
     public function search(Request $request)
     {
         $productSearch=$request->input('product');
-        $data['product']=Product::where('name','LIKE','%'.$productSearch.'%')->get();
+        $products = Product::query();
+        if($productSearch){
+            $products = $products->where('name','LIKE','%'.$productSearch.'%')
+                                ->orWhereHas('category', function( $query ) use ( $productSearch ){
+                                    $query->where('name','LIKE','%'.$productSearch.'%');
+                                });
+        }
+        $data['product']=  $products->with('category')->get();
         return view('product.search',$data);
     }
 }
